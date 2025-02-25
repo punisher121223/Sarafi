@@ -1,0 +1,21 @@
+name: CryptoRecon Workflow
+on: [push]  # هر وقت کد جدیدی push کنی اجرا می‌شه
+jobs:
+  recon-and-exploit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3  # کد رو از مخزن می‌گیره
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        pip install requests web3
+        sudo apt update && sudo apt install -y nmap
+    - name: Run Reconnaissance
+      run: python recon.py
+    - name: Run Vulnerability Scan
+      run: python vuln_scan.py
+    - name: Run Exploitation
+      run: python exploit.py
